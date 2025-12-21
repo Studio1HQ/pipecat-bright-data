@@ -15,7 +15,7 @@ async def search_tech_news(query: str):
         "url": f"https://news.google.com/search?q={query}+technology",
         "format": "json",
     }
-    
+
     async with httpx.AsyncClient(timeout=30) as client:
         r = await client.post(BASE_URL, headers=HEADERS, json=payload)
         r.raise_for_status()
@@ -32,6 +32,7 @@ async def search_tech_news(query: str):
         )
 
     return articles
+
 
 async def scrape_article(url: str):
     payload = {
