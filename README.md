@@ -20,9 +20,7 @@ User Call → Daily Transport (WebRTC) → Voice Input → OpenAI LLM → Bright
 ```
 
 ## Quick Start
-
 ### Prerequisites
-
 - Python 3.10+
 - Bright Data API key
 - OpenAI API key
@@ -33,8 +31,9 @@ User Call → Daily Transport (WebRTC) → Voice Input → OpenAI LLM → Bright
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
-   git clone https://github.com/yourusername/techstack-hotline.git
+   git clone git@github.com:daveclinton/pipecat-bright-data.git
    cd techstack-hotline
    ```
 
