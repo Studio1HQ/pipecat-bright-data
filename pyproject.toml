@@ -1,0 +1,9 @@
+[project]
+name = "techstack-hotline"
+version = "1.0.0"
+description = "Phone-based AI news agent with Pipecat and Bright Data"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pipecat-ai[daily,elevenlabs,openai,silero,google,runner]>=0.0.94",
+]
