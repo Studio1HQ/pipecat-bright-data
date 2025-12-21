@@ -15,12 +15,11 @@ async def search_tech_news(query: str):
         "url": f"https://news.google.com/search?q={query}+technology",
         "format": "json",
     }
-
+    
     async with httpx.AsyncClient(timeout=30) as client:
         r = await client.post(BASE_URL, headers=HEADERS, json=payload)
         r.raise_for_status()
         data = r.json()
-
     articles = []
     for item in data.get("articles", [])[:5]:
         articles.append(
@@ -40,7 +39,6 @@ async def scrape_article(url: str):
         "url": url,
         "format": "text",
     }
-
     async with httpx.AsyncClient(timeout=30) as client:
         r = await client.post(BASE_URL, headers=HEADERS, json=payload)
         r.raise_for_status()
