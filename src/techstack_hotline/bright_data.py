@@ -30,7 +30,6 @@ async def search_tech_news(query: str):
                 "snippet": item.get("description", ""),
             }
         )
-
     return articles
 
 
