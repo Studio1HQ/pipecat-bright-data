@@ -1,314 +1,134 @@
-# TechStack Hotline 
+<div align="center">
 
-**A Voice-Activated AI Assistant for Real-Time Tech News**
+<img src="https://raw.githubusercontent.com/Studio1HQ/Studio1HQ/main/assets/banners/pipecat-bright-data.webp" alt="TechStack Hotline with Pipecat and Bright Data: A voice assistant that reads you live tech news" width="100%" />
 
-TechStack Hotline is a phone-based AI assistant that delivers the latest technology news through natural voice conversations. Built with Pipecat and powered by Bright Data, this system provides developers with up-to-the-minute information about their preferred technologies via phone calls.
+<br />
+<br />
+
+# TechStack Hotline with Pipecat and Bright Data
+
+### A voice assistant that reads you live tech news
+
+A Pipecat voice bot over Daily WebRTC that uses GPT-4o-mini, ElevenLabs speech and Bright Data calls to search Google News and read article text on request.
+
+<br />
+
+[![Built by Studio1](https://img.shields.io/badge/Built_by_Studio1-f97316?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTYwIiBmaWxsPSJub25lIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTAgMzVDMCAxNi42ODA3IDE0LjA3NDQgMS42NDg0NCAzMiAwLjEyNjk1M1YxNDFINTEuMDUyM0M1Mi40MzA4IDEzNy4zNDQgNTQuNzQ0NiAxMzMuNjg5IDU3Ljk5MzggMTMwLjAzM0M2MS4xNDQ2IDEyNi41MDggNjQuNjg5MiAxMjMuNDQgNjguNjI3NyAxMjAuODI5QzcyLjU2NjIgMTE4LjM0OSA3Ni4zNTY5IDExNi43ODIgODAgMTE2LjEyOVY4Ni43NTQ0Qzc1LjQ3MDggODcuOTI5MiA3MS4zODQ2IDg5LjY5MTkgNjcuNzQxNSA5Mi4wNDE1QzY0IDk0LjUyMjUgNjAuNzUwOCA5Ny40NiA1Ny45OTM4IDEwMC44NTRDNTYuNTM0NSAxMDIuNzIgNTUuMjU0NSAxMDQuNjU5IDU0LjE1MzkgMTA2LjY3MVYwSDEyNUMxNDQuMzMgMCAxNjAgMTUuNjY5OSAxNjAgMzVWMTI1QzE2MCAxNDQuMzMgMTQ0LjMzIDE2MCAxMjUgMTYwSDEyNFYxOEgxMDQuOTQ4QzEwMy41NjkgMjEuNjgxNiAxMDEuMjU1IDI1LjM2MjggOTguMDA2MiAyOS4wNDQ0Qzk0Ljg1NTQgMzIuNTk0MiA5MS4zMTA4IDM1LjY4NDEgODcuMzcyMyAzOC4zMTRDODMuNDMzOCA0MC44MTIgNzkuNjQzMSA0Mi4zODk2IDc2IDQzLjA0NzRWNzIuNjMwNEM4MC41MjkyIDcxLjQ0NzMgODQuNjE1NCA2OS42NzI0IDg4LjI1ODUgNjcuMzA1N0M5MiA2NC44MDc2IDk1LjI0OTIgNjEuODQ5MSA5OC4wMDYyIDU4LjQzMDdDOTkuNDY1NSA1Ni41NTEzIDEwMC43NDUgNTQuNTk4NiAxMDEuODQ2IDUyLjU3MjNWMTYwSDM1QzE1LjY3IDE2MCAwIDE0NC4zMyAwIDEyNVYzNVoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4K)](https://studio1hq.com)
+[![Built with Bright Data](https://img.shields.io/badge/Built_with_Bright_Data-141414?style=for-the-badge)](https://brightdata.com)
+
+[Bright Data docs](https://docs.brightdata.com) &nbsp;·&nbsp; [Bright Data](https://brightdata.com) &nbsp;·&nbsp; [Pipecat](https://pipecat.ai) &nbsp;·&nbsp; [More examples](https://github.com/Studio1HQ) &nbsp;·&nbsp; [studio1hq.com](https://studio1hq.com)
+
+</div>
+
+<br />
+
+## Overview
+
+TechStack Hotline is a voice assistant for developers. You talk to it, ask about a technology, and it reads back recent news. The pipeline runs on [Pipecat](https://pipecat.ai) with Daily WebRTC for audio, GPT-4o-mini for the conversation, and ElevenLabs for speech.
+
+Bright Data supplies the news data. `bright_data.py` posts to the Bright Data `dca/trigger` endpoint with a `news` zone to search Google News, and with an `unblocker` zone to fetch article text. The LLM calls these through two tools: `get_tech_news` and `read_article`.
 
 ## Features
 
-- **Voice-Activated News**: Call the assistant and ask for news about any technology
-- **Real-Time Data**: Powered by Bright Data for current, accurate information
-- **Natural Conversations**: Built with Pipecat for smooth voice interactions
-- **Article Summarization**: Get concise summaries of the latest tech articles
-- **Full Article Reading**: Option to read complete articles when needed
-- **Developer-Friendly**: Easy to deploy and extend with custom tools
+- **Voice-activated news**: Ask about any technology and get the latest stories.
+- **Article summaries**: Returns up to five articles with title, source, URL and snippet.
+- **Full article reading**: Fetches article text (first 4,000 characters) on request.
+- **Natural conversation**: Silero voice activity detection, OpenAI function calling and ElevenLabs speech.
+- **Extensible tools**: Add new LLM tools in `tools.py`.
 
-## Architecture
+## Tech stack
 
-```
-User Call → Daily Transport (WebRTC) → Voice Input → OpenAI LLM → Bright Data API → News Processing → Voice Response → User
-```
+| Layer | Tool |
+| --- | --- |
+| Voice framework | [Pipecat](https://pipecat.ai) |
+| Transport | [Daily](https://www.daily.co) WebRTC |
+| Web data | [Bright Data](https://brightdata.com) |
+| LLM | [OpenAI](https://platform.openai.com) GPT-4o-mini |
+| Speech | [ElevenLabs](https://elevenlabs.io) TTS, Silero VAD |
 
-## Quick Start
+## Getting started
+
 ### Prerequisites
+
 - Python 3.10+
-- Bright Data API key
-- OpenAI API key
-- ElevenLabs API key
-- Daily.co account
-- Virtual environment (recommended)
+- A [Bright Data](https://brightdata.com) API key with news and unblocker zones
+- An OpenAI API key
+- An ElevenLabs API key
+- A Daily account and API key
 
 ### Installation
 
-1. **Clone the repository**
-
-   ```bash
-   git clone git@github.com:daveclinton/pipecat-bright-data.git
-   cd techstack-hotline
-   ```
-
-2. **Create and activate virtual environment**
-   ```bash
-   python -m venv venv
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -e .
-   ```
-
-4. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` with your API keys:
-   ```bash
-   BRIGHT_DATA_API_KEY=your_bright_data_key_here
-   OPENAI_API_KEY=your_openai_key_here
-   ELEVENLABS_API_KEY=your_elevenlabs_key_here
-   DAILY_API_KEY=your_daily_key_here
-   ```
-
-5. **Add robot image (optional)**
-   Place a `robot01.jpeg` in the `assets/` folder for visual feedback.
-
-### Running the Assistant
-
-1. **Start the bot**
-   ```bash
-   python -m techstack_hotline.main
-   ```
-
-2. **Access the voice interface**
-   - Join your Daily.co room URL in a browser
-   - Or call the associated phone number if configured
-
-3. **Start a conversation**
-   ```
-   User: "Hi, what's new with Python?"
-   Assistant: "Fetching the latest Python news for you..."
-   ```
-
-## Project Structure
-
-```
-techstack-hotline/
-├── techstack_hotline/
-│   ├── __init__.py
-│   ├── main.py          # Main Pipecat pipeline
-│   ├── bright_data.py   # Bright Data API integration
-│   └── tools.py         # LLM tool functions
-├── assets/
-│   └── robot01.jpeg     # Visual assets
-├── tests/
-│   └── test_bright_data.py
-├── pyproject.toml       # Dependencies
-├── .env                 # Environment variables
-├── .env.example         # Example env file
-└── README.md
+```bash
+git clone https://github.com/Studio1HQ/pipecat-bright-data.git
+cd pipecat-bright-data
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -e .
+cp env.example .env
 ```
 
-## API Integrations
+### Environment variables
 
-### Bright Data Integration
-The system uses Bright Data's DCA (Data Collection API) to:
-- Search Google News for current tech articles
-- Scrape full article content when requested
-- Bypass anti-bot measures for reliable access
+| Variable | Description |
+| --- | --- |
+| `BRIGHT_DATA_API_KEY` | Bright Data API key. |
+| `OPENAI_API_KEY` | OpenAI key for GPT-4o-mini. |
+| `ELEVENLABS_API_KEY` | ElevenLabs key for text to speech. |
+| `DAILY_API_KEY` | Daily key for rooms and transport. |
 
-### OpenAI Integration
-- GPT-4o-mini for natural conversation processing
-- Function calling for tool execution
-- Context management for multi-turn conversations
+`env.example` in the repo is empty, so create `.env` with these variables.
 
-### ElevenLabs Integration
-- Natural-sounding text-to-speech
-- Multiple voice options available
-- Real-time voice synthesis
-
-### Daily.co Integration
-- WebRTC-based voice communication
-- Phone number provisioning
-- Room management and user handling
-
-## 🔧 Customization
-
-### Adding New Tools
-Extend the assistant by adding new tool functions in `tools.py`:
-
-```python
-async def get_github_trends(language: str):
-    """Get trending GitHub repositories"""
-    # Implement with Bright Data
-    pass
-```
-
-### Modifying the Pipeline
-Customize the Pipecat pipeline in `main.py`:
-
-```python
-pipeline = Pipeline([
-    transport.input(),
-    # Add custom processors here
-    aggregator.user(),
-    llm,
-    tts,
-    ta,
-    transport.output(),
-    aggregator.assistant(),
-])
-```
-
-### Changing the Voice
-Modify the ElevenLabs configuration:
-
-```python
-tts = ElevenLabsTTSService(
-    api_key=os.getenv("ELEVENLABS_API_KEY"),
-    voice_id="another_voice_id_here",  # Change voice
-)
-```
-
-## Testing
-
-Run the test suite:
+### Run
 
 ```bash
-pytest tests/
+python -m techstack_hotline.bot
 ```
 
-Test individual components:
+The README refers to `techstack_hotline.main`, but the entry point in the repo is `bot.py`, which uses the Pipecat runner. Join the Daily room URL in a browser, or use a phone number if you configured one in Daily, then say something like "Hi, what's new with Python?"
 
-```python
-# Test Bright Data integration
-python -c "from techstack_hotline.bright_data import search_tech_news; import asyncio; print(asyncio.run(search_tech_news('python')))"
+## How it works
+
+```text
+User -> Daily transport (WebRTC) -> voice input -> OpenAI LLM -> Bright Data -> news processing -> voice response
 ```
 
-## Monitoring
-
-The system includes built-in metrics:
-- Response time tracking
-- API call success rates
-- Conversation flow analytics
-- Error rate monitoring
-
-Access metrics via the Pipecat dashboard when enabled.
-
-##  Deployment
-
-### Docker Deployment
-
-```dockerfile
-FROM python:3.10-slim
-WORKDIR /app
-COPY . .
-RUN pip install --no-cache-dir -e .
-CMD ["python", "-m", "techstack_hotline.main"]
+```text
+src/techstack_hotline/
+├── bot.py          # Pipecat pipeline and Daily transport
+├── bright_data.py  # search_tech_news, scrape_article
+├── tools.py        # get_tech_news, read_article tool functions
+└── assets/robot01.jpeg
 ```
 
-Build and run:
-```bash
-docker build -t techstack-hotline .
-docker run -p 8080:8080 --env-file .env techstack-hotline
-```
+The pipeline is `transport.input()`, user aggregator, LLM, TTS, `transport.output()`, assistant aggregator. To change the voice, set a different `voice_id` on `ElevenLabsTTSService`. To add a tool, write an async function in `tools.py` and register it with the LLM.
 
-### Cloud Deployment Options
+## Resources
 
-1. **AWS Elastic Beanstalk**
-2. **Google Cloud Run**
-3. **Azure Container Instances**
-4. **Heroku** (with Docker)
+- [Bright Data docs](https://docs.brightdata.com): Web data and API documentation.
+- [Bright Data](https://brightdata.com): Account and API key.
+- [Pipecat docs](https://docs.pipecat.ai): Pipelines, services and runners.
 
-## Example Conversations
-
-### Getting Tech News
-```
-User: "What's new with React?"
-Assistant: "Here's the latest React news: 
-1. React 19 Beta released with new features. Source: React Blog.
-2. New state management library announced. Source: TechCrunch.
-Would you like details on any specific item?"
-```
-
-### Reading an Article
-```
-User: "Read me the first article"
-Assistant: "Sure, here's the React 19 Beta article: [Reads article summary]"
-```
-
-### Multiple Technologies
-```
-User: "Compare updates for Python and JavaScript"
-Assistant: "Comparing Python and JavaScript updates:
-Python: Version 3.12 released with performance improvements.
-JavaScript: ECMAScript 2024 features finalized.
-[Continues with detailed comparison]"
-```
-
-##  Performance Metrics
-
-- **Response Time**: 2-4 seconds average
-- **Accuracy**: 95%+ relevant news matching
-- **Uptime**: 99.8% availability
-- **Concurrent Users**: 50+ simultaneous calls supported
-- **API Success Rate**: 98%+ for Bright Data calls
-
-## Security
-
-- API keys stored in environment variables
-- HTTPS for all external calls
-- Input sanitization for web queries
-- Rate limiting implemented
-- No sensitive data logging
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Setup
-```bash
-# Install development dependencies
-pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Check code quality
-black .
-flake8 .
-mypy .
-```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- [Pipecat](https://github.com/pipecat-ai/pipecat) for the voice AI framework
-- [Bright Data](https://brightdata.com/) for real-time web data access
-- [OpenAI](https://openai.com/) for language model capabilities
-- [ElevenLabs](https://elevenlabs.io/) for text-to-speech
-- [Daily.co](https://daily.co/) for WebRTC infrastructure
-
-##  Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/techstack-hotline/issues)
-- **Documentation**: [Wiki](https://github.com/yourusername/techstack-hotline/wiki)
-- **Email**: support@example.com
-
-##  Roadmap
-
-- [ ] Multi-language support
-- [ ] Scheduled news briefings
-- [ ] Integration with developer tools (GitHub, Jira)
-- [ ] Custom voice training
-- [ ] Mobile app companion
-- [ ] Analytics dashboard
-- [ ] Team collaboration features
-- [ ] Plugin system for custom data sources
+<br />
 
 ---
 
-**Ready to stay updated with the latest tech news?** Deploy your own TechStack Hotline today and never miss important updates again!
+<div align="center">
 
-*Built with for developers by developers*
+<a href="https://studio1hq.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Studio1HQ/website/main/brand/studio1-logo-on-dark.svg" />
+    <img src="https://raw.githubusercontent.com/Studio1HQ/website/main/brand/studio1-logo-on-light.svg" alt="Studio1" width="160" />
+  </picture>
+</a>
+
+Built by **[Studio1](https://studio1hq.com)**, the technical content and DevRel partner for devtool teams. Made with [Bright Data](https://brightdata.com).<br />
+Browse more open-source examples at [github.com/Studio1HQ](https://github.com/Studio1HQ).
+
+[![Website](https://img.shields.io/badge/studio1hq.com-0b0807?style=for-the-badge&logo=googlechrome&logoColor=white)](https://studio1hq.com)
+[![Book a call](https://img.shields.io/badge/Book_a_strategy_call-f97316?style=for-the-badge&logo=googlecalendar&logoColor=white)](https://cal.com/studio1/collab)
+[![X](https://img.shields.io/badge/%40Studio1HQ-141414?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Studio1HQ)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/studio1hq/)
+
+<sub><a href="https://studio1hq.com">studio1hq.com</a> · Technical content, docs, video and DevRel for devtools</sub>
+
+</div>
